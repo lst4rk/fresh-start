@@ -22,7 +22,13 @@ module.exports = {
   },
  resetDays: async (req, res) => {
     try {
-      await User.findByIdAndUpdate({ _id: req.user._id }, { daysSober: 0});
+      await User.findByIdAndUpdate(
+        { _id: req.user._id }, 
+        {
+          daysSober: 0,
+          $set: { soberSince: Date.now() }
+        }
+      );
       console.log("Days have been reset!");
       res.redirect("/profile");
     } catch (err) {
